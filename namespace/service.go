@@ -1,8 +1,8 @@
 package namespace
 
 import (
-	mgo "gopkg.in/mgo.v2"
-	"gopkg.in/mgo.v2/bson"
+	mgo "github.com/globalsign/mgo"
+	"github.com/globalsign/mgo/bson"
 
 	"github.com/dukfaar/goUtils/eventbus"
 )
@@ -11,6 +11,7 @@ type Service interface {
 	Create(*Model) (*Model, error)
 	DeleteByID(id string) (string, error)
 	FindByID(id string) (*Model, error)
+	FindByName(name string) (*Model, error)
 	Update(string, interface{}) (*Model, error)
 
 	HasElementBeforeID(id string) (bool, error)
@@ -69,7 +70,7 @@ func (s *MgoService) DeleteByID(id string) (string, error) {
 	err := s.collection.RemoveId(bson.ObjectIdHex(id))
 
 	if err == nil {
-		s.eventbus.Emit("rnamespaceecipe.deleted", id)
+		s.eventbus.Emit("namespace.deleted", id)
 	}
 
 	return id, err
@@ -79,6 +80,14 @@ func (s *MgoService) FindByID(id string) (*Model, error) {
 	var result Model
 
 	err := s.collection.FindId(bson.ObjectIdHex(id)).One(&result)
+
+	return &result, err
+}
+
+func (s *MgoService) FindByName(name string) (*Model, error) {
+	var result Model
+
+	err := s.collection.Find(bson.M{"name": name}).One(&result)
 
 	return &result, err
 }

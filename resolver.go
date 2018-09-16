@@ -123,11 +123,27 @@ func (r *Resolver) Namespace(ctx context.Context, args struct {
 }) (*namespace.Resolver, error) {
 	namespaceService := ctx.Value("namespaceService").(namespace.Service)
 
-	queryRecipe, err := namespaceService.FindByID(args.Id)
+	queryNamespace, err := namespaceService.FindByID(args.Id)
 
 	if err == nil {
 		return &namespace.Resolver{
-			Model: queryRecipe,
+			Model: queryNamespace,
+		}, nil
+	}
+
+	return nil, err
+}
+
+func (r *Resolver) NamespaceByName(ctx context.Context, args struct {
+	Name string
+}) (*namespace.Resolver, error) {
+	namespaceService := ctx.Value("namespaceService").(namespace.Service)
+
+	queryNamespace, err := namespaceService.FindByName(args.Name)
+
+	if err == nil {
+		return &namespace.Resolver{
+			Model: queryNamespace,
 		}, nil
 	}
 

@@ -12,8 +12,7 @@ import (
 	dukHttp "github.com/dukfaar/goUtils/http"
 	"github.com/dukfaar/namespaceBackend/namespace"
 
-	"gopkg.in/mgo.v2"
-
+	"github.com/globalsign/mgo"
 	"github.com/gorilla/websocket"
 
 	graphql "github.com/graph-gophers/graphql-go"

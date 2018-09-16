@@ -14,6 +14,7 @@ var Schema string = `
 		type Query {
 			namespaces(first: Int, last: Int, before: String, after: String): NamespaceConnection!
 			namespace(id: ID!): Namespace!
+			namespaceByName(name: String!): Namespace!
 		}
 
 		input NamespaceMutationInput {
