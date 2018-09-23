@@ -30,7 +30,7 @@ func main() {
 
 	log.Println("Connected to database")
 
-	db := dbSession.DB("recipe")
+	db := dbSession.DB("namespace")
 
 	nsqEventbus := eventbus.NewNsqEventBus(env.GetDefaultEnvVar("NSQD_TCP_URL", "localhost:4150"), env.GetDefaultEnvVar("NSQLOOKUP_HTTP_URL", "localhost:4161"))
 
